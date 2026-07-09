@@ -119,22 +119,59 @@ def get_threat_count():
 
 
 # ======================================================
-# Recent Alerts
+# Recent Alerts (Structured)
 # ======================================================
 def get_recent_alerts(limit=10):
 
     if not os.path.exists(ALERT_FILE):
         return []
 
+    alerts = []
+
     try:
 
-        with open(ALERT_FILE, "r") as f:
-            return f.readlines()[-limit:]
+        with open(ALERT_FILE, "r") as file:
 
-    except Exception:
+            lines = file.readlines()[-limit:]
+
+            for line in lines:
+
+                line = line.strip()
+
+                if not line:
+                    continue
+
+                parts = line.split(",")
+
+                if len(parts) >= 8:
+
+                    alerts.append({
+
+                        "time": parts[0],
+
+                        "source": parts[1],
+
+                        "destination": parts[2],
+
+                        "protocol": parts[3],
+
+                        "packet_size": parts[4],
+
+                        "severity": parts[5],
+
+                        "risk_score": parts[6],
+
+                        "action": parts[7]
+
+                    })
+
+        return alerts
+
+    except Exception as e:
+
+        print("Alert Parsing Error:", e)
 
         return []
-
 
 # ======================================================
 # Trust Score
@@ -159,17 +196,63 @@ def dashboard_summary():
     packets = get_packet_count(df)
     threats = get_threat_count()
 
+    # Load Recent Alerts
+    alerts = get_recent_alerts()
+
+    # ======================================================
+    # Threat Severity Statistics
+    # ======================================================
+
+    critical = 0
+    high = 0
+    medium = 0
+    low = 0
+
+    for alert in alerts:
+
+        severity = alert["severity"].upper()
+
+        if severity == "CRITICAL":
+            critical += 1
+
+        elif severity == "HIGH":
+            high += 1
+
+        elif severity == "MEDIUM":
+            medium += 1
+
+        elif severity == "LOW":
+            low += 1
+
     return {
+
         "packets": packets,
+
         "threats": threats,
+
         "trusted": packets - threats,
+
         "trust_score": calculate_trust_score(
             packets,
             threats
         ),
+
         "average_packet_size": get_average_packet_size(df),
+
         "protocols": get_protocol_stats(df),
+
         "top_sources": get_top_source_ips(df),
+
         "top_destinations": get_top_destination_ips(df),
-        "recent_alerts": get_recent_alerts()
+
+        "recent_alerts": alerts,
+
+        "critical": critical,
+
+        "high": high,
+
+        "medium": medium,
+
+        "low": low
+
     }

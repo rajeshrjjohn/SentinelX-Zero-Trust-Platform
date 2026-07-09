@@ -2,7 +2,7 @@
 # SentinelX Analytics Engine Test
 # ==========================================================
 
-from analytics import (
+from dashboard.utils.analytics import (
     dashboard_summary,
     load_network_data,
     get_packet_count,
@@ -76,8 +76,17 @@ print("=" * 70)
 alerts = get_recent_alerts()
 
 if alerts:
+
     for alert in alerts:
-        print(alert.strip())
+
+        print(
+            f"{alert['time']} | "
+            f"{alert['source']} | "
+            f"{alert['severity']} | "
+            f"Risk: {alert['risk_score']} | "
+            f"{alert['action']}"
+        )
+
 else:
     print("No alerts found.")
 

@@ -26,13 +26,22 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <div class="header">
 
-<h1>🛡 SentinelX</h1>
+    <div class="logo">
+        🛡 SentinelX
+    </div>
 
-<h3>AI-Powered Zero Trust Threat Detection Platform</h3>
+    <div class="title">
+        Security Operations Center
+        <br>
+        <small>AI-Powered Zero Trust Threat Intelligence Platform</small>
+    </div>
 
-<p>
-Real-Time Network Threat Intelligence Dashboard
-</p>
+    <div class="status">
+        <span class="status-dot"></span>
+        ACTIVE
+        <br>
+        {{ current_time }}
+    </div>
 
 </div>
 
@@ -71,6 +80,70 @@ Real-Time Network Threat Intelligence Dashboard
 <h2>🛡 Trust Score</h2>
 
 <h1 class="yellow">{{ trust_score }}%</h1>
+
+</div>
+
+<!-- NEW CARD -->
+
+<div class="card">
+
+<h2>💻 CPU Usage</h2>
+
+<h1 class="green">{{ cpu }}%</h1>
+
+</div>
+
+<!-- NEW CARD -->
+
+<div class="card">
+
+<h2>🧠 RAM Usage</h2>
+
+<h1 class="blue">{{ ram }}%</h1>
+
+</div>
+
+<!-- NEW CARD -->
+
+<div class="card">
+
+<h2>💾 Disk Usage</h2>
+
+<h1 class="yellow">{{ disk }}%</h1>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- Threat Summary -->
+<!-- ====================================================== -->
+
+<div class="section">
+
+<h2>🛡 Threat Severity Summary</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🔴 Critical</h3>
+<h1 class="red">{{ critical }}</h1>
+</div>
+
+<div class="card">
+<h3>🟠 High</h3>
+<h1 style="color:orange;">{{ high }}</h1>
+</div>
+
+<div class="card">
+<h3>🟡 Medium</h3>
+<h1 class="yellow">{{ medium }}</h1>
+</div>
+
+<div class="card">
+<h3>🟢 Low</h3>
+<h1 class="green">{{ low }}</h1>
+</div>
 
 </div>
 
@@ -156,13 +229,14 @@ Real-Time Network Threat Intelligence Dashboard
 
 </div>
 
+
 <!-- ====================================================== -->
 <!-- System Information -->
 <!-- ====================================================== -->
 
 <div class="section">
 
-<h2>⚙ System Information</h2>
+<h2>💻 Live System Health</h2>
 
 <table>
 
@@ -170,7 +244,7 @@ Real-Time Network Threat Intelligence Dashboard
 
 <th>Component</th>
 
-<th>Status</th>
+<th>Value</th>
 
 </tr>
 
@@ -184,9 +258,25 @@ Real-Time Network Threat Intelligence Dashboard
 
 <tr>
 
+<td>Hostname</td>
+
+<td>{{ hostname }}</td>
+
+</tr>
+
+<tr>
+
+<td>Operating System</td>
+
+<td>{{ os_name }}</td>
+
+</tr>
+
+<tr>
+
 <td>Detection Engine</td>
 
-<td>Isolation Forest</td>
+<td>Isolation Forest Machine Learning</td>
 
 </tr>
 
@@ -208,6 +298,30 @@ Real-Time Network Threat Intelligence Dashboard
 
 <tr>
 
+<td>CPU Usage</td>
+
+<td>{{ cpu }}%</td>
+
+</tr>
+
+<tr>
+
+<td>RAM Usage</td>
+
+<td>{{ ram }}%</td>
+
+</tr>
+
+<tr>
+
+<td>Disk Usage</td>
+
+<td>{{ disk }}%</td>
+
+</tr>
+
+<tr>
+
 <td>Average Packet Size</td>
 
 <td>{{ average_packet_size }} Bytes</td>
@@ -216,20 +330,32 @@ Real-Time Network Threat Intelligence Dashboard
 
 <tr>
 
-<td>Trust Status</td>
+<td>Current Time</td>
+
+<td>{{ current_time }}</td>
+
+</tr>
+
+<tr>
+
+<td>System Status</td>
 
 <td style="color:#00ff99;">
-ACTIVE
+🟢 {{ system_status }}
 </td>
 
 </tr>
 
-</table>
+</tr>
 
-</div>
+</td>Dashboard Version</td>
+
+</td>SentinelX v2.1</td>
+
+</tr>
 
 <!-- ====================================================== -->
-<!-- Alerts -->
+<!-- Recent Threat Alerts -->
 <!-- ====================================================== -->
 
 <div class="section">
@@ -240,7 +366,15 @@ ACTIVE
 
 <tr>
 
-<th>Alert Log</th>
+<th>Time</th>
+
+<th>Source IP</th>
+
+<th>Severity</th>
+
+<th>Risk</th>
+
+<th>Action</th>
 
 </tr>
 
@@ -248,7 +382,35 @@ ACTIVE
 
 <tr>
 
-<td>{{ alert }}</td>
+<td>{{ alert.time }}</td>
+
+<td>{{ alert.source }}</td>
+
+<td>
+
+{% if alert.severity == "CRITICAL" %}
+
+🔴 CRITICAL
+
+{% elif alert.severity == "HIGH" %}
+
+🟠 HIGH
+
+{% elif alert.severity == "MEDIUM" %}
+
+🟡 MEDIUM
+
+{% else %}
+
+🟢 LOW
+
+{% endif %}
+
+</td>
+
+<td>{{ alert.risk_score }}</td>
+
+<td>{{ alert.action }}</td>
 
 </tr>
 

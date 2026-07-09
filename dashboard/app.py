@@ -23,7 +23,9 @@ if PROJECT_ROOT not in sys.path:
 # Imports
 # ==========================================================
 from flask import Flask, render_template
+from datetime import datetime
 
+from dashboard.utils.monitor import get_system_info
 from dashboard.utils.analytics import dashboard_summary
 
 from dashboard.utils.charts import (
@@ -46,6 +48,10 @@ app = Flask(__name__)
 def dashboard():
 
     summary = dashboard_summary()
+
+    system = get_system_info()
+
+    current_time = datetime.now().strftime("%d %b %Y %H:%M:%S")
 
     protocol_graph = protocol_chart(
         summary["protocols"]
@@ -96,7 +102,30 @@ def dashboard():
 
         top_sources=summary["top_sources"],
 
-        top_destinations=summary["top_destinations"]
+        top_destinations=summary["top_destinations"],
+
+        cpu=system["cpu"],
+
+        ram=system["ram"],
+
+        disk=system["disk"],
+
+        hostname=system["hostname"],
+
+        os_name=system["os"],
+
+        system_status=system["status"],
+
+        critical=summary["critical"],
+
+        high=summary["high"],
+
+        medium=summary["medium"],
+
+        low=summary["low"],
+
+        current_time=current_time,
+
 
     )
 
