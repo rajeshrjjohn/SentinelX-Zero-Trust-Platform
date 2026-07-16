@@ -1,6 +1,6 @@
 """
 ==========================================================
-SentinelX v2.0
+SentinelX v3.0
 Charts Engine
 AI-Powered Zero Trust Threat Detection Platform
 ==========================================================
@@ -172,6 +172,39 @@ def threat_chart(threats, trusted):
         showlegend=False,
 
         height=400
+
+    )
+
+
+# ======================================================
+# Threat Trend Chart
+# ======================================================
+
+import plotly.graph_objects as go
+
+
+def threat_trend_chart(total_packets, threats):
+
+    trusted = total_packets - threats
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=["Packets", "Threats", "Trusted"],
+        y=[total_packets, threats, trusted],
+        mode="lines+markers",
+        name="Network Activity"
+    ))
+
+    fig.update_layout(
+
+        title="Threat Trend Analytics",
+
+        template="plotly_dark",
+
+        height=350,
+
+        margin=dict(l=20, r=20, t=50, b=20)
 
     )
 

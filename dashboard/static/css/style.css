@@ -1,5 +1,5 @@
 /* ==========================================================
-   SentinelX v2.0
+   SentinelX v3.0
    AI-Powered Zero Trust Threat Detection Platform
 ========================================================== */
 
@@ -27,44 +27,106 @@ body{
 
 }
 
-/* =======================================================
-Header
-======================================================= */
+/* ======================================================
+   Professional Header
+====================================================== */
 
 .header{
 
-    text-align:center;
+    display:flex;
 
-    padding:30px;
+    justify-content:space-between;
 
-}
+    align-items:center;
 
-.header h1{
+    padding:20px;
 
-    color:#00ff99;
+    background:#1c2533;
 
-    font-size:48px;
+    border-radius:12px;
 
-}
+    margin-bottom:20px;
 
-.header h3{
-
-    color:#00d9ff;
-
-    margin-top:10px;
+    border:1px solid #2d3748;
 
 }
 
-.header p{
+.logo{
 
-    color:#999;
+    display:flex;
 
-    margin-top:10px;
+    align-items:center;
+
+    gap:10px;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#00e676;
+
+}
+
+.version{
+
+    background:#00e676;
+
+    color:#111;
+
+    padding:4px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+.title h1{
+
+    margin:0;
+
+    color:white;
+
+    font-size:28px;
+
+}
+
+.title p{
+
+    margin-top:5px;
+
+    color:#cfd8dc;
+
+}
+
+.status{
+
+    text-align:right;
+
+}
+
+.status-box{
+
+    color:#00e676;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:8px;
+
+}
+
+.status small{
+
+    color:#b0bec5;
 
 }
 
 /* =======================================================
-Cards
+   Statistics Cards (Professional)
 ======================================================= */
 
 .cards{
@@ -73,7 +135,7 @@ Cards
 
     grid-template-columns:repeat(4,1fr);
 
-    gap:20px;
+    gap:22px;
 
     margin-bottom:30px;
 
@@ -83,37 +145,63 @@ Cards
 
     background:#161b22;
 
-    border-radius:12px;
+    border-radius:15px;
 
-    padding:25px;
+    padding:22px;
 
     text-align:center;
 
-    transition:.3s;
+    border-top:4px solid #00e676;
 
-    box-shadow:0 0 15px rgba(0,255,150,.15);
+    transition:all .35s ease;
+
+    box-shadow:0 6px 18px rgba(0,255,150,.12);
+
+    position:relative;
+
+    overflow:hidden;
 
 }
 
 .card:hover{
 
-    transform:translateY(-5px);
+    transform:translateY(-8px);
 
-    box-shadow:0 0 20px rgba(0,255,150,.45);
+    box-shadow:0 12px 28px rgba(0,255,150,.35);
+
+    border-top-color:#00ff99;
 
 }
 
 .card h2{
 
-    color:#cccccc;
+    color:#d8d8d8;
 
-    margin-bottom:20px;
+    font-size:18px;
+
+    margin-bottom:18px;
+
+    font-weight:700;
 
 }
 
 .card h1{
 
-    font-size:42px;
+    font-size:52px;
+
+    margin:10px 0;
+
+    font-weight:800;
+
+}
+
+.card p{
+
+    margin-top:10px;
+
+    font-size:14px;
+
+    color:#9aa4b2;
 
 }
 
@@ -334,5 +422,321 @@ font-size:34px;
 font-size:32px;
 
 }
+
+/* ======================================================
+   Professional PDF Button
+====================================================== */
+
+.report-button-container{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin:20px 0;
+
+}
+
+.report-btn,
+.report-btn:link,
+.report-btn:visited{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:12px 24px;
+
+    margin-top:15px;
+
+    background:linear-gradient(135deg,#00c853,#00e676);
+
+    color:#ffffff !important;
+
+    text-decoration:none !important;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    border-radius:10px;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:all .3s ease;
+
+    box-shadow:0 4px 12px rgba(0,200,83,.35);
+
+}
+
+.report-btn:hover{
+
+    background:linear-gradient(135deg,#00b248,#00d95f);
+
+    color:#ffffff !important;
+
+    text-decoration:none;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 18px rgba(0,230,118,.45);
+
+}
+
+.report-btn:active{
+
+    transform:scale(.97);
+
+}
+
+.report-btn:focus{
+
+    outline:none;
+
+    color:#ffffff !important;
+
+}
+
+.report-btn i{
+
+    font-size:18px;
+
+}
+
+/* ======================================================
+   Report Statistics
+====================================================== */
+
+.report-stats{
+
+    display:flex;
+
+    gap:20px;
+
+    margin:20px 0;
+
+    justify-content:space-between;
+
+}
+
+.report-stat-card{
+
+    flex:1;
+
+    background:#1c2533;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    text-align:center;
+
+    border:1px solid #00c853;
+
+    transition:0.3s;
+
+}
+
+.report-stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 0 15px rgba(0,200,83,0.5);
+
+}
+
+.report-stat-card h3{
+
+    color:#00e676;
+
+    margin-bottom:10px;
+
+}
+
+.report-stat-card h2{
+
+    color:white;
+
+    font-size:28px;
+
+}
+
+.report-stat-card p{
+
+    color:white;
+
+    font-size:16px;
+
+    word-break:break-word;
+
+}
+
+/* ======================================================
+   Report History
+====================================================== */
+
+.report-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+}
+
+.report-table th{
+
+    background:#00a86b;
+
+    color:white;
+
+    padding:14px;
+
+    text-align:left;
+
+}
+
+.report-table td{
+
+    padding:12px;
+
+    border-bottom:1px solid #444;
+
+}
+
+.report-table tr:hover{
+
+    background:#2d3748;
+
+}
+
+.report-table a{
+
+    color:#00e676;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+.report-table a:hover{
+
+    color:#69f0ae;
+
+}
+
+<script>
+
+function searchReports(){
+
+    let input=document.getElementById("reportSearch");
+
+    let filter=input.value.toUpperCase();
+
+    let table=document.getElementById("reportTable");
+
+    let rows=table.getElementsByTagName("tr");
+
+    for(let i=1;i<rows.length;i++){
+
+        let td=rows[i].getElementsByTagName("td")[0];
+
+        if(td){
+
+            let txt=td.textContent||td.innerText;
+
+            if(txt.toUpperCase().indexOf(filter)>-1){
+
+                rows[i].style.display="";
+
+            }else{
+
+                rows[i].style.display="none";
+
+            }
+
+        }
+
+    }
+
+}
+
+</script>
+
+/* ======================================================
+   Card Colors
+====================================================== */
+
+.packets-card{
+
+    border-top:4px solid #00e676;
+
+}
+
+.threats-card{
+
+    border-top:4px solid #ff5252;
+
+}
+
+.trusted-card{
+
+    border-top:4px solid #29b6f6;
+
+}
+
+.trust-card{
+
+    border-top:4px solid #ffd600;
+
+}
+
+.cpu-card{
+
+    border-top:4px solid #7c4dff;
+
+}
+
+.ram-card{
+
+    border-top:4px solid #ff9100;
+
+}
+
+.disk-card{
+
+    border-top:4px solid #00bcd4;
+
+}
+
+.critical-card{
+
+    border-top:4px solid #d50000;
+
+}
+
+.high-card{
+
+    border-top:4px solid #ff6d00;
+
+}
+
+.medium-card{
+
+    border-top:4px solid #ffd600;
+
+}
+
+.low-card{
+
+    border-top:4px solid #00c853;
 
 }

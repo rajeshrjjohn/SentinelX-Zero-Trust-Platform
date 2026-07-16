@@ -2,7 +2,7 @@
 
 """
 ==========================================================
-SentinelX v2.1
+SentinelX v3.0
 AI-Powered Zero Trust Threat Detection Platform
 Live Packet Capture Engine
 ==========================================================
@@ -162,7 +162,7 @@ def packet_callback(packet):
 def main():
 
     print("=" * 70)
-    print(" SentinelX v2.1 ")
+    print(" SentinelX v3.0 ")
     print(" AI-Powered Zero Trust Threat Detection Platform ")
     print("=" * 70)
 

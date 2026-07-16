@@ -21,29 +21,56 @@ href="{{ url_for('static', filename='css/style.css') }}">
 <div class="container">
 
 <!-- ====================================================== -->
-<!-- Header -->
+<!-- Professional Header -->
 <!-- ====================================================== -->
 
 <div class="header">
 
     <div class="logo">
-        🛡 SentinelX
+
+        🛡 <span>SentinelX</span>
+
+        <div class="version">
+            v3.0
+        </div>
+
     </div>
 
     <div class="title">
-        Security Operations Center
-        <br>
-        <small>AI-Powered Zero Trust Threat Intelligence Platform</small>
+
+        <h1>Security Operations Center</h1>
+
+        <p>
+            AI-Powered Zero Trust Threat Intelligence Platform
+        </p>
+
     </div>
 
     <div class="status">
-        <span class="status-dot"></span>
-        ACTIVE
-        <br>
-        {{ current_time }}
+
+        <div class="status-box">
+
+            <span class="status-dot"></span>
+
+            <strong>ACTIVE</strong>
+
+        </div>
+
+        <small>{{ current_time }}</small>
+
+        <br><br>
+
+        
+        <a href="/generate_report" class="report-btn">
+
+            📄 Generate PDF Report
+
+        </a>
+
     </div>
 
 </div>
+
 
 <!-- ====================================================== -->
 <!-- Statistics Cards -->
@@ -51,7 +78,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <div class="cards">
 
-<div class="card">
+<div class="card packets_card">
 
 <h2>📦 Network Packets</h2>
 
@@ -59,7 +86,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 </div>
 
-<div class="card">
+<div class="card threats_card">
 
 <h2>🚨 Threat Events</h2>
 
@@ -67,7 +94,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 </div>
 
-<div class="card">
+<div class="card trusted-card">
 
 <h2>✅ Trusted Traffic</h2>
 
@@ -75,7 +102,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 </div>
 
-<div class="card">
+<div class="card trust-card">
 
 <h2>🛡 Trust Score</h2>
 
@@ -85,7 +112,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <!-- NEW CARD -->
 
-<div class="card">
+<div class="card cpu-card">
 
 <h2>💻 CPU Usage</h2>
 
@@ -95,7 +122,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <!-- NEW CARD -->
 
-<div class="card">
+<div class="card ram-card">
 
 <h2>🧠 RAM Usage</h2>
 
@@ -105,11 +132,43 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 <!-- NEW CARD -->
 
-<div class="card">
+<div class="card disk-card">
 
 <h2>💾 Disk Usage</h2>
 
 <h1 class="yellow">{{ disk }}%</h1>
+
+</div>
+
+<div class="card critical-card">
+
+<h2>🔴 Critical</h2>
+
+<h1 class="red">{{ critical }}</h1>
+
+</div>
+
+<div class="card high-card">
+
+<h2>🟠 High</h2>
+
+<h1 style="color:orange;">{{ high }}</h1>
+
+</div>
+
+<div class="card medium-card">
+
+<h2>🟡 Medium</h2>
+
+<h1 class="yellow">{{ medium }}</h1>
+
+</div>
+
+<div class="card low-card">
+
+<h2>🟢 Low</h2>
+
+<h1 class="green">{{ low }}</h1>
 
 </div>
 
@@ -350,7 +409,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 </td>Dashboard Version</td>
 
-</td>SentinelX v2.1</td>
+</td>SentinelX v3.0</td>
 
 </tr>
 
@@ -421,6 +480,123 @@ href="{{ url_for('static', filename='css/style.css') }}">
 </div>
 
 <!-- ====================================================== -->
+<!-- Threat Intelligence Summary -->
+<!-- ====================================================== -->
+
+<div class="section">
+
+<h2>🛡 Threat Intelligence Summary</h2>
+
+<table>
+
+<tr>
+    <th>Metric</th>
+    <th>Value</th>
+</tr>
+
+<tr>
+    <td>🌍 Top Attacker IP</td>
+    <td>{{ top_attacker }}</td>
+</tr>
+
+<tr>
+    <td>🎯 Most Targeted IP</td>
+    <td>{{ top_target }}</td>
+</tr>
+
+<tr>
+    <td>📡 Most Active Protocol</td>
+    <td>{{ top_protocol }}</td>
+</tr>
+
+<tr>
+    <td>📦 Average Packet Size</td>
+    <td>{{ average_packet }} Bytes</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- Threat Trend Analytics -->
+<!-- ====================================================== -->
+
+<div class="section">
+
+<h2>📈 Threat Trend Analytics</h2>
+
+{{ trend_graph|safe }}
+
+</div>
+
+<!-- ====================================================== -->
+<!-- Live Packet Activity -->
+<!-- ====================================================== -->
+
+<div class="section">
+
+<h2>📡 Live Packet Activity</h2>
+
+<table>
+
+<tr>
+    <th>Time</th>
+    <th>Source IP</th>
+    <th>Destination IP</th>
+    <th>Protocol</th>
+    <th>Packet Size</th>
+</tr>
+
+{% for packet in recent_packets %}
+
+<tr>
+
+    <td>{{ packet["Time"] }}</td>
+
+    <td>{{ packet["Source_IP"] }}</td>
+
+    <td>{{ packet["Destination_IP"] }}</td>
+
+    <td>{{ packet["Protocol"] }}</td>
+
+    <td>{{ packet["Packet_Size"] }} Bytes</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- AI Security Insights -->
+<!-- ====================================================== -->
+
+<div class="section">
+
+<h2>🤖 AI Security Insights</h2>
+
+<table>
+
+<tr>
+    <th>Insights</th>
+</tr>
+
+{% for insight in ai_insights %}
+
+<tr>
+    <td>{{ insight }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- ====================================================== -->
 <!-- Footer -->
 <!-- ====================================================== -->
 
@@ -442,7 +618,7 @@ AI-Powered Network Threat Intelligence
 
 <p>
 
-Version 2.0
+Version 3.0
 
 </p>
 
@@ -484,4 +660,159 @@ Interactive Dashboard
 
 </body>
 
+...
+</div>
+
+<script>
+
+function searchReports(){
+
+    let input = document.getElementById("reportSearch");
+
+    let filter = input.value.toUpperCase();
+
+    let table = document.getElementById("reportTable");
+
+    let rows = table.getElementsByTagName("tr");
+
+    for(let i=1;i<rows.length;i++){
+
+        let td = rows[i].getElementsByTagName("td")[0];
+
+        if(td){
+
+            let txt = td.textContent || td.innerText;
+
+            if(txt.toUpperCase().indexOf(filter)>-1){
+
+                rows[i].style.display="";
+
+            }else{
+
+                rows[i].style.display="none";
+
+            }
+
+        }
+
+    }
+
+}
+
+</script>
+
+</body>
+
 </html>
+
+<!-- ====================================================== -->
+<!-- Report History -->
+<!-- ====================================================== -->
+
+<div class="card">
+
+    <h2>📂 Report History</h2>
+
+    <!-- ====================================================== -->
+    <!-- Report Statistics -->
+    <!-- ====================================================== -->
+
+    <div class="report-stats">
+
+        <div class="report-stat-card">
+
+            <h3>📄 Total Reports</h3>
+
+            <h2>{{ report_stats.total_reports }}</h2>
+
+        </div>
+
+        <div class="report-stat-card">
+
+            <h3>🆕 Latest Report</h3>
+
+            <p>{{ report_stats.latest_report }}</p>
+
+        </div>
+
+        <div class="report-stat-card">
+
+            <h3>💾 Storage Used</h3>
+
+            <h2>{{ report_stats.storage }} MB</h2>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- Search Box -->
+    <!-- ====================================================== -->
+
+    <div style="margin:20px 0;">
+
+        <input
+            type="text"
+            id="reportSearch"
+            placeholder="🔍 Search Report..."
+            onkeyup="searchReports()"
+            style="
+                width:100%;
+                padding:12px;
+                border-radius:8px;
+                border:none;
+                font-size:16px;
+            "
+        >
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- Report Table -->
+    <!-- ====================================================== -->
+
+    <table class="report-table" id="reportTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Report Name</th>
+
+                <th>Created</th>
+
+                <th>Download</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for report in reports %}
+
+            <tr>
+
+                <td>📄 {{ report.name }}</td>
+
+                <td>{{ report.created }}</td>
+
+                <td>
+
+                    <a href="/download_report/{{ report.name }}">
+
+                        ⬇ Download
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>

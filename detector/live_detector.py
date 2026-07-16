@@ -1,6 +1,6 @@
 """
 ==========================================================
-SentinelX v2.1
+SentinelX v3.0
 AI Live Detection Engine
 AI-Powered Zero Trust Threat Detection
 ==========================================================

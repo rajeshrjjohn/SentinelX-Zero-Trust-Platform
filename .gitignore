@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+
+# Nano swap files
+*.swp
+*.save
+
+# Logs
+logs/
+*.log
+
+# Generated reports
+reports/*.pdf
+reports/*.txt
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS
+.DS_Store
