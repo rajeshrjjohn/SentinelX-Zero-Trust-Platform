@@ -737,45 +737,46 @@ screenshots/dashboard_home.png
 ---
 
 ## Threat Intelligence
-
-```
 <img width="1920" height="1020" alt="threat_intlligence png" src="https://github.com/user-attachments/assets/7e7fe783-d298-49af-ae88-790aef13afd1" />
+```
 
+screenshots/threat_intelligence.png
 ```
 
 ---
 
 ## Live Packet Activity
-
-```
 <img width="1920" height="1020" alt="Screenshot 2026-07-16 161506" src="https://github.com/user-attachments/assets/6f4d545a-92bf-4be7-b25b-b96bf71735b6" />
+```
+screenshots/live_packet_activity.png
 
 ```
 
 ---
 
 ## AI Security Insights
-
-```
 <img width="1920" height="1020" alt="ai_security_insights png" src="https://github.com/user-attachments/assets/9e9a3c6f-2798-4232-922f-ff163977b38d" />
 
+```
+
+screenshots/ai_security_insights.png
 ```
 
 ---
 
 ## Report History
-
-```
 <img width="1920" height="1020" alt="report_history png" src="https://github.com/user-attachments/assets/5c36231c-8b42-4163-8358-f98d5d2d3b21" />
+```
+screenshots/report_history.png
 
 ```
 
 ---
 
 ## PDF Report
-
-```
 <img width="1920" height="1020" alt="pdf_report png" src="https://github.com/user-attachments/assets/04e74e92-d122-4d83-b9ae-3e838cae81b0" />
+```
+screenshots/pdf_report.png
 
 ```
 
