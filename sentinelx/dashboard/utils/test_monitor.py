@@ -1,4 +1,4 @@
-from dashboard.utils.monitor import get_system_health
+from sentinelx.dashboard.utils.monitor import get_system_health
 
 print("=" * 50)
 print("SentinelX System Monitor")

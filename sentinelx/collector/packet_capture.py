@@ -32,12 +32,12 @@ if PROJECT_ROOT not in sys.path:
 from scapy.all import sniff
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 
-from collector.traffic_logger import (
+from sentinelx.collector.traffic_logger import (
     initialize_csv,
     log_packet
 )
 
-from detector.live_detector import detect_packet
+from sentinelx.detector.live_detector import detect_packet
 
 # ==========================================================
 # Log Files

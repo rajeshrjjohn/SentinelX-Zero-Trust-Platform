@@ -9,7 +9,7 @@ AI-Powered Zero Trust Threat Detection
 import joblib
 import pandas as pd
 
-from dashboard.utils.threat import classify_threat
+from sentinelx.dashboard.utils.threat import classify_threat
 
 # ==========================================================
 # Load Trained Isolation Forest Model

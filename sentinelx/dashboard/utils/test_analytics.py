@@ -2,7 +2,7 @@
 # SentinelX Analytics Engine Test
 # ==========================================================
 
-from dashboard.utils.analytics import (
+from sentinelx.dashboard.utils.analytics import (
     dashboard_summary,
     load_network_data,
     get_packet_count,

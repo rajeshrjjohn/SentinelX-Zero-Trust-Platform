@@ -15,7 +15,7 @@ from reportlab.platypus import (
 
 from reportlab.lib.styles import getSampleStyleSheet
 
-from dashboard.utils.analytics import (
+from sentinelx.dashboard.utils.analytics import (
     dashboard_summary,
     get_ai_insights
 )

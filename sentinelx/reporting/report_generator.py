@@ -7,7 +7,7 @@ SentinelX Security Report Generator
 import os
 from datetime import datetime
 
-from dashboard.utils.analytics import (
+from sentinelx.dashboard.utils.analytics import (
     dashboard_summary,
     get_ai_insights
 )

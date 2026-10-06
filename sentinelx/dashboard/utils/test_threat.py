@@ -1,4 +1,4 @@
-from dashboard.utils.threat import classify_threat
+from sentinelx.dashboard.utils.threat import classify_threat
 
 samples = [
     (80, "UDP"),

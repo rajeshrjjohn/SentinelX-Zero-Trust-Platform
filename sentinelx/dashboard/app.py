@@ -30,18 +30,18 @@ from flask import (
 
 from datetime import datetime
 
-from dashboard.utils.monitor import get_system_info
-from dashboard.utils.analytics import (
+from sentinelx.dashboard.utils.monitor import get_system_info
+from sentinelx.dashboard.utils.analytics import (
     dashboard_summary,
     get_ai_insights
 )
 
-from dashboard.utils.reports import (
+from sentinelx.dashboard.utils.reports import (
     get_report_history,
     get_report_statistics
 )
 
-from dashboard.utils.charts import (
+from sentinelx.dashboard.utils.charts import (
     protocol_chart,
     source_ip_chart,
     destination_ip_chart,
@@ -50,7 +50,7 @@ from dashboard.utils.charts import (
     threat_trend_chart
 )
 
-from pdf_report_generator import generate_pdf_report
+from sentinelx.reporting.pdf_report_generator import generate_pdf_report
 
 # ==========================================================
 # Flask App
