@@ -1,28 +1,18 @@
 import pandas as pd
 import joblib
 from sklearn.ensemble import IsolationForest
+from sentinelx.config import DATA_DIR, MODELS_DIR
 
-df = pd.read_csv(
-    "data/network.csv"
-)
+PROTOCOL_MAP = {"TCP": 6, "UDP": 17, "ICMP": 1}
 
-X = df[
-    [
-        "packet_length",
-        "protocol"
-    ]
-]
+df = pd.read_csv(DATA_DIR / "network.csv")
+df["packet_length"] = df["Packet_Size"]
+df["protocol"] = df["Protocol"].map(PROTOCOL_MAP).fillna(0)
 
-model = IsolationForest(
-    contamination=0.05,
-    random_state=42
-)
+X = df[["packet_length", "protocol"]]
 
+model = IsolationForest(contamination=0.05, random_state=42)
 model.fit(X)
 
-joblib.dump(
-    model,
-    "models/anomaly_model.pkl"
-)
-
+joblib.dump(model, MODELS_DIR / "anomaly_model.pkl")
 print("Model Saved Successfully")
