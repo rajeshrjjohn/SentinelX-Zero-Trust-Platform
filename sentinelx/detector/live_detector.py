@@ -7,6 +7,7 @@ AI-Powered Zero Trust Threat Detection
 """
 
 import joblib
+from sentinelx.config import MODELS_DIR
 import pandas as pd
 
 from sentinelx.dashboard.utils.threat import classify_threat
@@ -16,7 +17,7 @@ from sentinelx.dashboard.utils.threat import classify_threat
 # ==========================================================
 
 try:
-    model = joblib.load("models/anomaly_model.pkl")
+    model = joblib.load(MODELS_DIR / "anomaly_model.pkl")
     print("✅ AI Model Loaded Successfully")
 
 except Exception as e:

@@ -26,3 +26,6 @@ reports/*.txt
 # OS
 .DS_Store
 data/network.csv
+*.pcap
+*.pcapng
+data/raw/
