@@ -16,14 +16,7 @@ from datetime import datetime
 # Add Project Root to Python Path
 # ==========================================================
 
-PROJECT_ROOT = os.path.dirname(
-    os.path.dirname(
-        os.path.abspath(__file__)
-    )
-)
-
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
+from sentinelx.config import LOGS_DIR
 
 # ==========================================================
 # Imports
@@ -43,10 +36,9 @@ from sentinelx.detector.live_detector import detect_packet
 # Log Files
 # ==========================================================
 
-LOG_DIR = os.path.join(PROJECT_ROOT, "logs")
-ALERT_FILE = os.path.join(LOG_DIR, "alerts.log")
+ALERT_FILE = LOGS_DIR / "alerts.log"
 
-os.makedirs(LOG_DIR, exist_ok=True)
+os.makedirs(LOGS_DIR, exist_ok=True)
 
 initialize_csv()
 
