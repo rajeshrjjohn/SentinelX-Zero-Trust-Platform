@@ -192,3 +192,25 @@ Cybersecurity Analyst (CEH v13) — SOC Operations, VAPT, AI-driven Threat Detec
 ## 📜 License
 
 MIT License — see [LICENSE](LICENSE).
+
+---
+
+## 📸 Screenshots
+
+### Dashboard Overview
+![Dashboard Home](screenshots/dashboard_home.png)
+
+### Threat Intelligence
+![Threat Intelligence](screenshots/threat_intlligence.png)
+
+### AI Security Insights
+![AI Security Insights](screenshots/ai_security_insights.png)
+
+### Threat Trend Analysis
+![Threat Trend Analysis](screenshots/threat_thrend_analysis.png)
+
+### Report History
+![Report History](screenshots/report_history.png)
+
+### PDF Report
+![PDF Report](screenshots/pdf_report.png)
