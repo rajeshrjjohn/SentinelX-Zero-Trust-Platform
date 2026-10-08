@@ -1,860 +1,194 @@
-# 🛡 SentinelX Zero Trust Platform v3.0
+# 🛡 SentinelX — Zero Trust Network Threat Detection Platform
 
 <p align="center">
-
 <img src="https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python">
-
 <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?style=for-the-badge&logo=flask">
-
-<img src="https://img.shields.io/badge/Scapy-Packet%20Capture-red?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/Scikit--Learn-Isolation%20Forest-green?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/Plotly-Interactive%20Charts-blueviolet?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/Kali%20Linux-Security%20Platform-success?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/Version-v3.0-brightgreen?style=for-the-badge">
-
+<img src="https://img.shields.io/badge/Scikit--Learn-ML-green?style=for-the-badge">
+<img src="https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker">
+<img src="https://github.com/rajeshrjjohn/SentinelX-Zero-Trust-Platform/actions/workflows/tests.yml/badge.svg?branch=v2">
 </p>
 
----
+SentinelX captures live network traffic, extracts flow-level features, and uses machine learning to flag anomalous activity — then surfaces the results through a Flask SOC-style dashboard with PDF reporting.
 
-# 🚀 AI-Powered Zero Trust Network Threat Intelligence Platform
-
-SentinelX is an enterprise-inspired cybersecurity platform that performs **real-time network monitoring**, **AI-powered anomaly detection**, **Zero Trust traffic analysis**, and **automated security reporting**.
-
-The platform continuously captures live network packets, analyzes traffic using Machine Learning, classifies potential threats, and presents security insights through an interactive Security Operations Center (SOC) dashboard.
-
-SentinelX was developed as a practical cybersecurity project to demonstrate modern concepts such as:
-
-- Zero Trust Architecture
-- AI-based Threat Detection
-- Network Traffic Analysis
-- Threat Intelligence
-- Security Automation
-- Security Reporting
+This isn't a tutorial clone. The detection pipeline was evaluated against real captured traffic (85,896 benign packets from normal browsing, 54,760 attack packets from live Nmap scans and a SYN flood against an isolated Docker target), and the results — including where the model performs poorly — are documented below rather than hidden.
 
 ---
 
-# 📑 Table of Contents
+## 📊 Evaluation Results
 
-- Project Overview
-- Why SentinelX?
-- Key Features
-- Technology Stack
-- System Architecture
-- Workflow
-- Project Structure
-- Installation Guide
-- Requirements
-- Running the Project
-- Dashboard Overview
-- AI Threat Detection
-- Packet Capture Module
-- Threat Intelligence
-- AI Security Insights
-- Protocol Distribution
-- Threat Trend Analytics
-- Live Packet Activity
-- System Health Monitoring
-- PDF Report Generator
-- Report History
-- Screenshots
-- Future Improvements
-- License
-- Author
-- Acknowledgements
+Full methodology, confusion matrices, and feature importances are in [`RESULTS.md`](RESULTS.md). Summary:
+
+| Model | Precision | Recall | F1 | False Positive Rate |
+|---|---|---|---|---|
+| Isolation Forest (unsupervised, trained on benign traffic only) | 0.980 | 0.999 | 0.990 | **0.415** |
+| Random Forest (supervised baseline) | 1.000 | 0.999 | 1.000 | 0.000 |
+
+**Honest takeaway:** Isolation Forest's precision/recall look strong, but that's partly an artifact of class imbalance (the test set is ~95% attack flows). The number that actually matters operationally is the **41.5% false-positive rate** — in a real SOC, that volume of false alarms would be unusable. A supervised Random Forest, trained with labels, closes that gap entirely (0% FPR) but requires labeled attack data that isn't always available in production. This tradeoff — and what it implies about deploying unsupervised detection alone — is the core finding of this project.
+
+Top predictive features (Random Forest): `pkts_per_sec`, `avg_pkt_size`, `bytes_per_sec`, `duration` — consistent with how port scans and floods actually look at the flow level (many short, uniform packets) versus normal browsing (longer, variable sessions).
 
 ---
 
-# 📌 Project Overview
-
-Modern organizations generate millions of network packets every day.
-
-Traditional monitoring solutions often require expensive commercial software and complex infrastructure.
-
-SentinelX demonstrates how an intelligent security monitoring platform can be built using open-source technologies.
-
-The platform combines:
-
-- Real-Time Packet Capture
-- Machine Learning
-- Zero Trust Security
-- Threat Intelligence
-- Interactive Visualization
-- Automated Reporting
-
-into a single lightweight solution.
-
----
-
-# ❓ Why SentinelX?
-
-Most student cybersecurity projects focus on only one area:
-
-- Packet Capture
-- Machine Learning
-- Dashboard
-- Reporting
-
-SentinelX combines all of these into one integrated platform.
-
-It provides:
-
-- Continuous monitoring
-- AI-assisted threat detection
-- Real-time visualization
-- Automated report generation
-- Security analytics
-- System monitoring
-
-making it resemble a lightweight Security Operations Center (SOC).
-
----
-
-# ✨ Key Features
-
-## 🌐 Network Monitoring
-
-- Live Packet Capture using Scapy
-- Source IP Detection
-- Destination IP Detection
-- Protocol Identification
-- Packet Size Analysis
-- Continuous Monitoring
-
----
-
-## 🤖 AI Threat Detection
-
-- Isolation Forest Machine Learning Model
-- Anomaly Detection
-- Risk Score Calculation
-- Threat Classification
-- Zero Trust Decision Engine
-
----
-
-## 📊 Interactive Dashboard
-
-Professional Flask Dashboard including:
-
-- Network Statistics
-- Threat Counters
-- Trust Score
-- CPU Monitoring
-- RAM Monitoring
-- Disk Monitoring
-- Threat Charts
-- Protocol Distribution
-- Live Traffic Table
-- AI Security Insights
-
----
-
-## 📈 Analytics
-
-SentinelX automatically generates
-
-- Threat Trend Analytics
-- Protocol Statistics
-- Top Source IPs
-- Top Destination IPs
-- Packet Statistics
-- Trust Score Analytics
-
----
-
-## 🛡 Threat Intelligence
-
-Displays
-
-- Top Attacker
-- Top Target
-- Most Used Protocol
-- Average Packet Size
-- Threat Severity
-- Threat Distribution
-
----
-
-## 📄 Professional PDF Reports
-
-Automatically generates numbered security reports.
-
-Each report includes
-
-- Executive Summary
-- Network Statistics
-- Threat Summary
-- Threat Intelligence
-- AI Security Insights
-- Trust Score
-- Timestamp
-- Platform Version
-
-Example
-
-security_report_001.pdf
-
-security_report_002.pdf
-
-security_report_003.pdf
-
-...
-
-security_report_010.pdf
-
----
-
-## 📂 Report History
-
-Maintains a searchable report history.
-
-Features include
-
-- Automatic Numbering
-- Search
-- Download
-- Storage Usage
-- Latest Report
-- Report Statistics
-
----
-
-# 🛠 Technology Stack
-
-| Category | Technology |
-|------------|----------------|
-| Language | Python 3.13 |
-| Framework | Flask |
-| Packet Capture | Scapy |
-| Machine Learning | Scikit-Learn |
-| AI Algorithm | Isolation Forest |
-| Data Processing | Pandas |
-| Charts | Plotly |
-| Reports | ReportLab |
-| Operating System | Kali Linux |
-| Version Control | Git & GitHub |
-
----
-
-# 🏗 System Architecture
-
-```text
-                   Internet
-
-                       │
-
-                       ▼
-
-            Scapy Packet Capture
-
-                       │
-
-                       ▼
-
-              Traffic Collection
-
-                       │
-
-                       ▼
-
-             Feature Extraction
-
-                       │
-
-                       ▼
-
-        Isolation Forest AI Engine
-
-                       │
-
-            ┌──────────┼──────────┐
-
-            ▼          ▼          ▼
-
-      Threat Engine Dashboard PDF Reports
-
-                       │
-
-                       ▼
-
-              Report History
-```
-
----
-
-# 🔄 System Workflow
-
-```text
-Capture Packets
-
-        │
-
-        ▼
-
-Extract Features
-
-        │
-
-        ▼
-
-AI Prediction
-
-        │
-
-        ▼
-
-Threat Classification
-
-        │
-
-        ▼
-
-Threat Intelligence
-
-        │
-
-        ▼
-
-Dashboard Visualization
-
-        │
-
-        ▼
-
-Generate Security Report
-
-        │
-
-        ▼
-
-Store Report History
-```
-
----
-
-# 📂 Project Structure
-
-```text
-SentinelX-Zero-Trust-Platform
-
-│
-
-├── collector/
-
-├── dashboard/
-
-│   ├── templates/
-
-│   ├── static/
-
-│   └── utils/
-
-├── detector/
-
-├── models/
-
-├── data/
-
-├── logs/
-
-├── reports/
-
-├── screenshots/
-
-├── zerotrust/
-
-├── report_generator.py
-
-├── pdf_report_generator.py
-
-├── run.py
-
-├── requirements.txt
-
-└── README.md
-```
----
-
-# ⚙️ Installation Guide
-
-## Prerequisites
-
-Before running SentinelX, ensure the following software is installed.
-
-| Software | Version |
-|----------|---------|
-| Python | 3.13+ |
-| Git | Latest |
-| Kali Linux | Recommended |
-| pip | Latest |
-
----
-
-## Clone Repository
+## 🚀 Quick Start (Docker)
 
 ```bash
 git clone https://github.com/rajeshrjjohn/SentinelX-Zero-Trust-Platform.git
-
 cd SentinelX-Zero-Trust-Platform
+git checkout v2
+docker-compose up -d --build
 ```
+
+Open **http://localhost:5000**. That's it — no manual dependency installation.
+
+To stop: `docker-compose down`
 
 ---
 
-## Install Dependencies
+## 🧪 Running the Tests
 
 ```bash
+pip install -r requirements-dev.txt
+python -m pytest tests/ -v
+```
+
+30 tests covering the detection engine, the trained model's feature contract, and the dashboard's analytics/monitor/threat modules. These run automatically on every push via [GitHub Actions](.github/workflows/tests.yml).
+
+---
+
+## ⚙️ Native Installation (without Docker)
+
+```bash
+git clone https://github.com/rajeshrjjohn/SentinelX-Zero-Trust-Platform.git
+cd SentinelX-Zero-Trust-Platform
+git checkout v2
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+python -m sentinelx.dashboard.app
 ```
 
----
-
-## Project Requirements
-
-The project uses the following major libraries.
-
-- Flask
-- Scapy
-- Pandas
-- NumPy
-- Plotly
-- Scikit-Learn
-- ReportLab
-- Joblib
-- Psutil
-
-Install manually if required:
+To run live packet capture (requires root/raw-socket privileges, host-only — see *Design Notes* below):
 
 ```bash
-pip install flask scapy pandas numpy plotly scikit-learn reportlab joblib psutil
+sudo python3 -m sentinelx.collector.packet_capture
 ```
 
----
-
-# 🚀 Running SentinelX
-
-## Step 1
-
-Start Packet Capture
+To retrain the anomaly model on your own captured traffic:
 
 ```bash
-python3 collector/packet_capture.py
+python3 -m sentinelx.detector.train_model
 ```
 
----
-
-## Step 2
-
-Run AI Detection
+To reproduce the flow-based evaluation in `RESULTS.md` from raw pcaps:
 
 ```bash
-python3 detector/live_detector.py
+python3 scripts/build_flows.py data/processed/benign_packets.csv data/processed/attack_packets.csv data/processed/flows.csv
+python3 scripts/evaluate.py data/processed/flows.csv
 ```
 
 ---
 
-## Step 3
+## ✨ Features
 
-Launch Dashboard
-
-```bash
-python3 dashboard/app.py
-```
-
-Open your browser
-
-```
-http://127.0.0.1:5000
-```
+- **Live packet capture** (Scapy) with per-packet protocol, size, and source/destination logging
+- **Two-stage anomaly detection**: an Isolation Forest model flags deviations; a rule-based severity classifier (`classify_threat`) assigns risk scores and recommended actions (ALLOW / MONITOR / BLOCK)
+- **Flow-level evaluation pipeline**: raw pcap → 5-tuple flows → engineered features (duration, packet/byte rates, SYN/ACK/RST counts, unique destination ports) → labeled precision/recall/FPR metrics
+- **Flask SOC dashboard**: live traffic table, threat counters, protocol distribution, trust score, system health (CPU/RAM/disk via `psutil`), and Plotly charts
+- **Automated PDF reporting** (ReportLab) with executive summary, threat intelligence, and numbered report history
+- **Containerized** with Docker + docker-compose for one-command deployment
+- **CI-tested**: 30 pytest tests run automatically on every push
 
 ---
 
-## Step 4
+## 🏗 Architecture
 
-Generate Security Report
-
-Click
-
-```
-Generate PDF Report
-```
-
-or
-
-```bash
-python3 pdf_report_generator.py
-```
-
----
-
-# 📊 Dashboard Overview
-
-The SentinelX dashboard provides complete visibility into the monitored network.
-
-Main dashboard modules include
-
-- Network Packet Statistics
-- Threat Event Counter
-- Trusted Traffic Counter
-- Trust Score
-- CPU Usage
-- RAM Usage
-- Disk Usage
-- Threat Severity Summary
-- Interactive Charts
-- Threat Intelligence
-- AI Security Insights
-- Live Packet Activity
-- Report History
-- PDF Report Generator
-
----
-
-# 🤖 AI Threat Detection
-
-SentinelX uses the **Isolation Forest** machine learning algorithm for anomaly detection.
-
-### Detection Workflow
-
-```
-Captured Packet
-
-        │
-
+```text
+Live Network (eth0)                 Isolated Docker Target
+        │                                    │
+        ▼                                    ▼
+  Scapy Capture                     tcpdump (lab attacks:
+        │                           nmap, hping3 SYN flood)
+        ▼                                    │
+ traffic_logger.py                           ▼
+        │                         data/raw/*.pcap
+        ▼                                    │
+ live_detector.py                            ▼
+ (Isolation Forest +             scripts/build_flows.py
+  rule-based severity)            (5-tuple flow features)
+        │                                    │
+        ▼                                    ▼
+   alerts.log                     scripts/evaluate.py
+        │                      (Isolation Forest vs
+        ▼                       Random Forest, metrics)
+ Flask Dashboard                            │
+ (sentinelx/dashboard)                      ▼
+        │                              RESULTS.md
         ▼
-
-Feature Extraction
-
-        │
-
-        ▼
-
-Isolation Forest Prediction
-
-        │
-
-        ▼
-
-Threat Classification
-
-        │
-
-        ▼
-
-Dashboard Update
-
-        │
-
-        ▼
-
-Security Report
+   PDF Reports
 ```
 
-### Threat Levels
-
-| Severity | Action |
-|-----------|---------|
-| Low | Monitor |
-| Medium | Monitor |
-| High | Block |
-| Critical | Block |
+Two parallel paths: the **left path** is the live product (capture → detect → dashboard → report), currently using a lightweight 2-feature model (`packet_length`, `protocol`) for real-time speed. The **right path** is the offline evaluation pipeline used to rigorously measure detection quality with richer flow-level features, documented in `RESULTS.md`. Closing that gap — bringing the flow-level features into live detection — is the natural next step (see *Roadmap*).
 
 ---
 
-# 📡 Scapy Packet Capture
+## 📂 Project Structure
 
-Scapy is responsible for real-time network monitoring.
-
-Captured information includes
-
-- Source IP
-- Destination IP
-- Protocol
-- Packet Size
-- Timestamp
-
-Supported protocols
-
-- TCP
-- UDP
-- ICMP
-
----
-
-# 🛡 Threat Intelligence
-
-SentinelX continuously generates threat intelligence.
-
-The dashboard displays
-
-- Top Attacker
-- Top Target
-- Most Active Protocol
-- Average Packet Size
-- Threat Distribution
-- Trust Score
-
-This allows administrators to quickly identify suspicious activity.
-
----
-
-# 🧠 AI Security Insights
-
-The AI Insights engine provides recommendations based on observed traffic.
-
-Example insights
-
-- Network operating normally.
-- No active threats detected.
-- ICMP traffic dominates the network.
-- Continue monitoring suspicious hosts.
-- Maintain Zero Trust policy.
-
----
-
-# 📈 Threat Trend Analytics
-
-Interactive Plotly charts provide
-
-- Threat Trend
-- Protocol Distribution
-- Source IP Analysis
-- Destination IP Analysis
-- Trust Score Visualization
-
-All charts update automatically with new data.
-
----
-
-# 🌐 Protocol Distribution
-
-The platform visualizes network protocols.
-
-Supported visualization
-
-- TCP
-- UDP
-- ICMP
-
-This helps identify unusual protocol usage.
-
----
-
-# 📦 Live Packet Activity
-
-Displays recently captured packets.
-
-Each record contains
-
-- Time
-- Source IP
-- Destination IP
-- Protocol
-- Packet Size
-
-The table updates automatically as traffic is captured.
-
----
-
-# 💻 System Health Monitoring
-
-SentinelX also monitors system resources.
-
-Metrics include
-
-- CPU Usage
-- RAM Usage
-- Disk Usage
-- Platform Version
-- System Status
-
-This helps ensure the monitoring server remains healthy.
-
----
-
-# 📄 PDF Report Generator
-
-SentinelX automatically generates professional security reports.
-
-Each generated report contains
-
-- Executive Summary
-- Network Statistics
-- Threat Summary
-- Trust Score
-- Threat Intelligence
-- AI Security Insights
-- System Health
-- Generation Time
-- Platform Version
-
-Reports are automatically numbered.
-
-Example
-
-```
-security_report_001.pdf
-
-security_report_002.pdf
-
-security_report_003.pdf
-
-...
-
-security_report_010.pdf
+```text
+SentinelX-Zero-Trust-Platform/
+├── sentinelx/
+│   ├── collector/        # Live packet capture + CSV logging
+│   ├── detector/         # Isolation Forest model + live inference
+│   ├── dashboard/        # Flask app, templates, static assets, analytics
+│   ├── reporting/        # PDF/text report generation
+│   ├── zerotrust/        # Trust score engine
+│   └── config.py         # Central path configuration
+├── scripts/
+│   ├── build_flows.py    # pcap → labeled flow features
+│   └── evaluate.py       # Trains/evaluates IF + RF, writes RESULTS.md
+├── tests/                # 30 pytest tests (detector, model, dashboard utils)
+├── models/                # Trained anomaly_model.pkl
+├── data/                  # Sample network data (live captures gitignored)
+├── .github/workflows/     # CI (GitHub Actions)
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt       # Runtime dependencies
+├── requirements-dev.txt   # + pytest for development
+└── RESULTS.md              # Full evaluation methodology and metrics
 ```
 
 ---
 
-# 📂 Report History
+## 🔍 Design Notes & Limitations
 
-All generated reports are stored in the Report History module.
-
-Features
-
-- Search
-- Download
-- Automatic Numbering
-- Storage Statistics
-- Latest Report Information
-
-This allows previous reports to be reviewed at any time.
+- **Live detection vs. offline evaluation use different feature sets.** The real-time detector (`live_detector.py`) uses only `packet_length` and `protocol` for speed; the evaluation pipeline (`scripts/evaluate.py`) uses 11 flow-level features and is more accurate. Bringing flow-level features into live detection is planned (see Roadmap).
+- **Packet capture runs on the host, not in Docker.** Raw socket access for live sniffing needs host networking and elevated privileges that don't containerize cleanly; the Dockerized dashboard is for the web UI only. This is a deliberate scope decision, not an oversight.
+- **Benign and attack traffic were captured on different interfaces** (`eth0` for benign host traffic, `docker0` for lab attacks against an isolated container), which could introduce confounding factors unrelated to attack behavior. Interface-sensitive features were excluded from the model for this reason.
+- **The attack set is dominated by port-scan flows**, which skews the class balance. See `RESULTS.md` for the full discussion of how this affects precision/recall interpretation.
+- **Isolation Forest's 41.5% false-positive rate is not production-ready** as a standalone detector. It's included deliberately as an honest baseline, not a polished result — the comparison against the supervised Random Forest is the point.
 
 ---
 
-# 📸 Screenshots
+## 🗺 Roadmap
 
-## Dashboard
-
-```
-screenshots/dashboard_home.png
-```
-
----
-
-## Threat Intelligence
-
-```
-screenshots/threat_intelligence.png
-```
+- [ ] Bring flow-level features (not just packet_length/protocol) into live detection
+- [ ] Tune Isolation Forest contamination/feature subset to reduce false-positive rate
+- [ ] Add IPv6 support to packet capture (currently IPv4-only)
+- [ ] SSH brute-force flow capture (Hydra) as an additional attack class
+- [ ] REST API for programmatic access to alerts
+- [ ] Basic authentication for the dashboard
 
 ---
 
-## Live Packet Activity
+## 👨‍💻 Author
 
-```
-screenshots/live_packet_activity.png
-```
+**Rajesh K**
+Cybersecurity Analyst (CEH v13) — SOC Operations, VAPT, AI-driven Threat Detection
 
----
-
-## AI Security Insights
-
-```
-screenshots/ai_security_insights.png
-```
+- GitHub: [github.com/rajeshrjjohn](https://github.com/rajeshrjjohn)
+- LinkedIn: [linkedin.com/in/rajeshrjjohn](https://linkedin.com/in/rajeshrjjohn)
+- Published research: *Adversarial Attack Detection in ML-Based Cybersecurity*, IJRASET Vol. 14 (DOI: 10.22214/ijraset.2026.79975)
 
 ---
 
-## Report History
+## 📜 License
 
-```
-screenshots/report_history.png
-```
-
----
-
-## PDF Report
-
-```
-screenshots/pdf_report.png
-```
-
----
-
-# 🚀 Future Improvements
-
-Future versions of SentinelX may include
-
-- Email Alert Notifications
-- SMS Alerting
-- SIEM Integration
-- Threat Feed Integration
-- MITRE ATT&CK Mapping
-- User Authentication
-- Role-Based Access Control
-- Docker Deployment
-- Kubernetes Support
-- Cloud Deployment
-- REST API
-- Mobile Dashboard
-- Threat Hunting Module
-
----
-
-# 👨‍💻 Author
-
-**Rajesh**
-
-Cybersecurity Engineer
-
-Specializations
-
-- Penetration Testing
-- Network Security
-- Zero Trust Security
-- Threat Detection
-- Python Development
-- Machine Learning for Cybersecurity
-
-GitHub
-
-https://github.com/rajeshrjjohn
-
----
-
-# 📜 License
-
-This project is released under the MIT License.
-
-Feel free to learn from it, modify it, and contribute while giving appropriate credit.
-
----
-
-# 🙏 Acknowledgements
-
-Special thanks to
-
-- Flask
-- Scapy
-- Plotly
-- Scikit-Learn
-- ReportLab
-- Python Community
-- Kali Linux Team
-- Open Source Community
-
----
-
-# ⭐ Support
-
-If you found this project useful,
-
-⭐ Star this repository
-
-🍴 Fork the repository
-
-🐛 Report issues
-
-💡 Suggest improvements
-
----
-
-# 🛡 SentinelX Zero Trust Platform v3.0
-
-> "Trust Nothing. Verify Everything."
-
-Built with ❤️ using Python, Flask, Machine Learning, and Zero Trust Security.
+MIT License — see [LICENSE](LICENSE).
