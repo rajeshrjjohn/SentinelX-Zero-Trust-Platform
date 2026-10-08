@@ -1,19 +1,15 @@
 import os
 import pandas as pd
+from sentinelx.config import DATA_DIR, LOGS_DIR
 
 # ======================================================
 # SentinelX Analytics Engine
 # AI-Powered Network Threat Intelligence
 # ======================================================
 
-# Project Root Directory
-BASE_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..")
-)
-
 # Data Files
-NETWORK_FILE = os.path.join(BASE_DIR, "data", "network.csv")
-ALERT_FILE = os.path.join(BASE_DIR, "logs", "alerts.log")
+NETWORK_FILE = DATA_DIR / "network.csv"
+ALERT_FILE = LOGS_DIR / "alerts.log"
 
 
 # ======================================================
